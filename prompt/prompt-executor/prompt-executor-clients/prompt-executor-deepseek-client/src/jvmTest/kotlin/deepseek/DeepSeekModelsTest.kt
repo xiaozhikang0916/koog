@@ -39,6 +39,7 @@ class DeepSeekModelsTest {
     @Test
     fun `DeepSeek models should include v4 entries`() {
         DeepSeekModels.models.map { it.id } shouldContainAll listOf(
+            "deepseek-v4.1-flash",
             "deepseek-v4-flash",
             "deepseek-v4-pro",
         )

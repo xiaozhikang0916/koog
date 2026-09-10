@@ -339,6 +339,12 @@ class ModelIdentifierParsingTest {
     // DeepSeek model identifier tests
     @Test
     fun testDeepSeekModels() = runTest {
+        // Test DeepSeek V4.1 Flash
+        val deepSeekV41Flash = getModelFromIdentifier("deepseek.deepseek-v4.1-flash")
+        assertNotNull(deepSeekV41Flash)
+        assertEquals(LLMProvider.DeepSeek, deepSeekV41Flash.provider)
+        assertEquals(DeepSeekModels.DeepSeekV4_1Flash, deepSeekV41Flash)
+
         // Test DeepSeek V4 Flash
         val deepSeekV4Flash = getModelFromIdentifier("deepseek.deepseek-v4-flash")
         assertNotNull(deepSeekV4Flash)

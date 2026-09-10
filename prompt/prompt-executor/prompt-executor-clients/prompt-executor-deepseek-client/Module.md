@@ -8,12 +8,16 @@ This module provides a client implementation for the DeepSeek API, allowing you 
 
 ### Supported Models
 
-| Name               | Speed  | Price                | Input       | Output      |
-|--------------------|--------|----------------------|-------------|-------------|
-| [DeepSeekV4Flash]  | Fast   | $0.14 / $0.28 per 1M | Text, Tools | Text, Tools |
-| [DeepSeekV4Pro]    | Medium | $1.74 / $3.48 per 1M | Text, Tools | Text, Tools |
-| [DeepSeekChat]     | Fast   | Deprecated alias     | Text, Tools | Text, Tools |
-| [DeepSeekReasoner] | Medium | Deprecated alias     | Text, Tools | Text, Tools |
+| Name                | Speed  | Price                | Input       | Output      |
+|---------------------|--------|----------------------|-------------|-------------|
+| [DeepSeekV4_1Flash] | Fast   | ¥1 / ¥4 per 1M       | Text, Tools | Text, Tools |
+| [DeepSeekV4Flash]   | Fast   | $0.14 / $0.28 per 1M | Text, Tools | Text, Tools |
+| [DeepSeekV4Pro]     | Medium | Deprecated           | Text, Tools | Text, Tools |
+
+`DeepSeekV4_1Flash` is the recommended model. Its price is ¥1 / ¥4 per 1M tokens during off-peak hours
+and ¥2 / ¥8 per 1M tokens during peak hours (Mon-Fri 9:00-12:00 and 14:00-18:00 Beijing time), with
+cached input charged at ¥0.02 / ¥0.04 per 1M tokens. `DeepSeekV4Pro` is deprecated: DeepSeek routes all
+V4 Pro requests to V4.1 Flash and bills them at V4.1 Flash rates.
 
 
 ### Model-Specific Parameters Support
@@ -87,7 +91,7 @@ suspend fun main() {
             system("You are a helpful coding assistant")
             user("Write a Python function to calculate factorial")
         },
-        model = DeepSeekModels.DeepSeekV4Pro,
+        model = DeepSeekModels.DeepSeekV4_1Flash,
         params = DeepSeekParams(
             temperature = 0.3,
             maxTokens = 2000,
@@ -133,7 +137,7 @@ val reasoningResponse = client.execute(
         system("Solve this step by step")
         user("If a train travels 120 km in 2 hours, what's its average speed?")
     },
-    model = DeepSeekModels.DeepSeekV4Pro,
+    model = DeepSeekModels.DeepSeekV4_1Flash,
     params = DeepSeekParams(
         temperature = 0.5,
         includeThoughts = true,

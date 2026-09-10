@@ -112,13 +112,13 @@ private fun deepSeek(parts: List<String>, identifier: String): LLModel? {
         return null
     }
 
-    val modelName = parts[1].lowercase()
+    // Special handling for DeepSeek identifiers to preserve dots in model names (e.g. "deepseek-v4.1-flash")
+    val modelName = identifier.substringAfter('.').lowercase()
 
     // Map for DeepSeek models by name
     val deepSeekModels = DEEPSEEK_MODELS_MAP
 
-    val normalizedModelName = modelName.lowercase()
-    val model = deepSeekModels[normalizedModelName]
+    val model = deepSeekModels[modelName]
     if (model == null) {
         logger.info("Model '$modelName' not found in DeepSeekModels")
         return null
@@ -317,6 +317,7 @@ private val OPENROUTER_MODELS_MAP = mapOf(
 )
 
 private val DEEPSEEK_MODELS_MAP = mapOf(
+    "deepseek-v4.1-flash" to DeepSeekModels.DeepSeekV4_1Flash,
     "deepseek-v4-flash" to DeepSeekModels.DeepSeekV4Flash,
     "deepseek-v4-pro" to DeepSeekModels.DeepSeekV4Pro,
 )

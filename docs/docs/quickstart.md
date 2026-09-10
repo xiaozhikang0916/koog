@@ -403,7 +403,7 @@ Koog requires either an API key from a [supported LLM provider](llm-providers.md
 
 === "DeepSeek β"
 
-    The following example creates and runs a simple Koog agent using the `deepseek-v4-flash` model via the DeepSeek API.
+    The following example creates and runs a simple Koog agent using the `deepseek-v4.1-flash` model via the DeepSeek API.
 
     === "Kotlin"
 
@@ -423,7 +423,7 @@ Koog requires either an API key from a [supported LLM provider](llm-providers.md
             // Create an agent
             val agent = AIAgent(
                 promptExecutor = MultiLLMPromptExecutor(DeepSeekLLMClient(apiKey)),
-                llmModel = DeepSeekModels.DeepSeekV4Flash
+                llmModel = DeepSeekModels.DeepSeekV4_1Flash
             )
 
             // Run the agent
@@ -457,7 +457,7 @@ Koog requires either an API key from a [supported LLM provider](llm-providers.md
         // Create an agent
         AIAgent<String, String> agent = AIAgent.builder()
             .promptExecutor(new MultiLLMPromptExecutor(deepSeekClient(apiKey)))
-            .llmModel(DeepSeekModels.DeepSeekV4Flash)
+            .llmModel(DeepSeekModels.DeepSeekV4_1Flash)
             .build();
 
         // Run the agent
