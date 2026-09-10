@@ -19,12 +19,12 @@ import kotlin.jvm.JvmField
  * | Name                | Speed  | Price                | Input       | Output      |
  * |---------------------|--------|----------------------|-------------|-------------|
  * | [DeepSeekV4_1Flash] | Fast   | ¥1 / ¥4 per 1M       | Text, Tools | Text, Tools |
- * | [DeepSeekV4Flash]   | Fast   | $0.14 / $0.28 per 1M | Text, Tools | Text, Tools |
+ * | [DeepSeekV4Flash]   | Fast   | Deprecated           | Text, Tools | Text, Tools |
  * | [DeepSeekV4Pro]     | Medium | Deprecated           | Text, Tools | Text, Tools |
  *
- * [DeepSeekV4_1Flash] is the recommended model. It is billed at ¥1 / ¥4 per 1M tokens during off-peak
- * hours and ¥2 / ¥8 per 1M tokens during peak hours (Mon-Fri 9:00-12:00 and 14:00-18:00 Beijing time),
- * with cached input charged at ¥0.02 / ¥0.04 per 1M tokens.
+ * [DeepSeekV4_1Flash] is the recommended model and supersedes both [DeepSeekV4Flash] and [DeepSeekV4Pro].
+ * It is billed at ¥1 / ¥4 per 1M tokens during off-peak hours and ¥2 / ¥8 per 1M tokens during peak hours
+ * (Mon-Fri 9:00-12:00 and 14:00-18:00 Beijing time), with cached input charged at ¥0.02 / ¥0.04 per 1M tokens.
  *
  * @see <a href="https://platform.deepseek.com/api-docs/pricing">DeepSeek Pricing Documentation</a>
  */
@@ -32,7 +32,7 @@ public object DeepSeekModels : LLModelDefinitions {
 
     /**
      * DeepSeek V4.1 Flash model optimized for fast, cost-effective generation.
-     * It supersedes [DeepSeekV4Pro] and supports both thinking and non-thinking modes in the DeepSeek API.
+     * It supersedes [DeepSeekV4Flash] and [DeepSeekV4Pro] and supports both thinking and non-thinking modes in the DeepSeek API.
      *
      * @see <a href="https://api-docs.deepseek.com/api/create-chat-completion/">Chat Completion API</a>
      */
@@ -56,10 +56,14 @@ public object DeepSeekModels : LLModelDefinitions {
 
     /**
      * DeepSeek V4 Flash model optimized for fast, cost-effective generation.
-     * Supports both thinking and non-thinking modes in the DeepSeek API.
+     * It is superseded by [DeepSeekV4_1Flash] and supports both thinking and non-thinking modes in the DeepSeek API.
      *
      * @see <a href="https://api-docs.deepseek.com/api/create-chat-completion/">Chat Completion API</a>
      */
+    @Deprecated(
+        message = "Use DeepSeekV4_1Flash instead.",
+        replaceWith = ReplaceWith("DeepSeekV4_1Flash")
+    )
     @JvmField
     public val DeepSeekV4Flash: LLModel = LLModel(
         provider = LLMProvider.DeepSeek,

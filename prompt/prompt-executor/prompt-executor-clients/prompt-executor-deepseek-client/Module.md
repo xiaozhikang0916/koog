@@ -11,13 +11,13 @@ This module provides a client implementation for the DeepSeek API, allowing you 
 | Name                | Speed  | Price                | Input       | Output      |
 |---------------------|--------|----------------------|-------------|-------------|
 | [DeepSeekV4_1Flash] | Fast   | ¥1 / ¥4 per 1M       | Text, Tools | Text, Tools |
-| [DeepSeekV4Flash]   | Fast   | $0.14 / $0.28 per 1M | Text, Tools | Text, Tools |
+| [DeepSeekV4Flash]   | Fast   | Deprecated           | Text, Tools | Text, Tools |
 | [DeepSeekV4Pro]     | Medium | Deprecated           | Text, Tools | Text, Tools |
 
-`DeepSeekV4_1Flash` is the recommended model. Its price is ¥1 / ¥4 per 1M tokens during off-peak hours
-and ¥2 / ¥8 per 1M tokens during peak hours (Mon-Fri 9:00-12:00 and 14:00-18:00 Beijing time), with
-cached input charged at ¥0.02 / ¥0.04 per 1M tokens. `DeepSeekV4Pro` is deprecated: DeepSeek routes all
-V4 Pro requests to V4.1 Flash and bills them at V4.1 Flash rates.
+`DeepSeekV4_1Flash` is the recommended model and supersedes both `DeepSeekV4Flash` and `DeepSeekV4Pro`.
+Its price is ¥1 / ¥4 per 1M tokens during off-peak hours and ¥2 / ¥8 per 1M tokens during peak hours
+(Mon-Fri 9:00-12:00 and 14:00-18:00 Beijing time), with cached input charged at ¥0.02 / ¥0.04 per 1M tokens.
+`DeepSeekV4Flash` and `DeepSeekV4Pro` are deprecated.
 
 
 ### Model-Specific Parameters Support
@@ -82,7 +82,7 @@ suspend fun main() {
             system("You are helpful assistant")
             user("What time is it now?")
         },
-        model = DeepSeekModels.DeepSeekV4Flash,
+        model = DeepSeekModels.DeepSeekV4_1Flash,
     )
 
     // Advanced example with custom parameters
@@ -117,7 +117,7 @@ val structuredResponse = client.execute(
         system("Extract key information as JSON")
         user("John Doe, age 30, works as software engineer at TechCorp")
     },
-    model = DeepSeekModels.DeepSeekV4Flash,
+    model = DeepSeekModels.DeepSeekV4_1Flash,
     params = DeepSeekParams(
         temperature = 0.1,
         schema = jsonSchema {

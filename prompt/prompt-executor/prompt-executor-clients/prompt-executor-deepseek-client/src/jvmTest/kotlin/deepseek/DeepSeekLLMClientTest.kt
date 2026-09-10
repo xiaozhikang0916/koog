@@ -200,7 +200,7 @@ class DeepSeekLLMClientTest {
 
         val prompt = Prompt.build(id = "p1", clock = FixedClock) { user("Hello") }
 
-        val responses = client.execute(prompt, DeepSeekModels.DeepSeekV4Flash)
+        val responses = client.execute(prompt, DeepSeekModels.DeepSeekV4_1Flash)
 
         assertTrue(capturedUrl.startsWith("https://api.deepseek.com/"))
         assertTrue(capturedUrl.endsWith("chat/completions"))
@@ -228,7 +228,7 @@ class DeepSeekLLMClientTest {
             temperature = 0.2
         }
 
-        val choices = client.executeMultipleChoices(prompt, DeepSeekModels.DeepSeekV4Flash, tools = emptyList())
+        val choices = client.executeMultipleChoices(prompt, DeepSeekModels.DeepSeekV4_1Flash, tools = emptyList())
         assertEquals(2, choices.size, "Response should have two choices")
         assertEquals(1, choices[0].parts.size, "First choice should have one part")
         val firstChoice = assertIs<MessagePart.Text>(choices[0].parts.first())
@@ -266,7 +266,7 @@ class DeepSeekLLMClientTest {
             user("Return a person info as a JSON")
         }
 
-        val responses = client.execute(prompt, DeepSeekModels.DeepSeekV4Flash)
+        val responses = client.execute(prompt, DeepSeekModels.DeepSeekV4_1Flash)
         assertEquals(1, responses.parts.size, "Response should have one choice")
         assertNotNull(capturedBody, "Captured body should not be null")
         assertTrue(capturedBody.contains("\"response_format\""), "Response body should contain response_format")
@@ -283,7 +283,7 @@ class DeepSeekLLMClientTest {
         val client = DeepSeekLLMClient(httpClientFactory = KtorKoogHttpClient.Factory(http), apiKey = "test-key", clock = FixedClock)
 
         val prompt = Prompt.build(id = "p-stream", clock = FixedClock) { user("Stream it") }
-        val flow = client.executeStreaming(prompt, DeepSeekModels.DeepSeekV4Flash)
+        val flow = client.executeStreaming(prompt, DeepSeekModels.DeepSeekV4_1Flash)
         // For now, we'd only verify that streaming flow can be created
         // as MockEngine does not support Ktor SSE end-to-end streaming reliably in tests
         assertNotNull(flow, "Flow should not be null")
@@ -362,7 +362,7 @@ class DeepSeekLLMClientTest {
         // 1. The reasoning delta is emitted while streaming.
         val frames = client.executeStreaming(
             Prompt.build(id = "p-stream", clock = FixedClock) { user("What's the weather in Boston?") },
-            DeepSeekModels.DeepSeekV4Flash,
+            DeepSeekModels.DeepSeekV4_1Flash,
         ).toList()
 
         assertTrue(
@@ -384,7 +384,7 @@ class DeepSeekLLMClientTest {
                 assistant,
             )
         )
-        client.execute(followUp, DeepSeekModels.DeepSeekV4Flash)
+        client.execute(followUp, DeepSeekModels.DeepSeekV4_1Flash)
 
         assertNotNull(capturedBody, "The follow-up request body should be captured")
         val messages = KotlinxJson.parseToJsonElement(capturedBody).jsonObject["messages"]!!.jsonArray
@@ -414,7 +414,7 @@ class DeepSeekLLMClientTest {
             user("What is the weather in Boston?")
         }
 
-        val responses = client.execute(prompt, DeepSeekModels.DeepSeekV4Flash)
+        val responses = client.execute(prompt, DeepSeekModels.DeepSeekV4_1Flash)
 
         assertEquals(2, responses.parts.size, "Response should contain reasoning and tool call")
 
@@ -471,7 +471,7 @@ class DeepSeekLLMClientTest {
                 ),
             )
         )
-        client.execute(prompt, DeepSeekModels.DeepSeekV4Flash)
+        client.execute(prompt, DeepSeekModels.DeepSeekV4_1Flash)
 
         assertNotNull(capturedBody, "Captured request body should not be null")
         val messages = KotlinxJson.parseToJsonElement(capturedBody).jsonObject["messages"]!!.jsonArray
@@ -507,7 +507,7 @@ class DeepSeekLLMClientTest {
 
         val prompt = Prompt.build(id = "p1", clock = FixedClock) { user("Hi!") }
         val ex = assertFailsWith<UnsupportedOperationException> {
-            client.moderate(prompt, DeepSeekModels.DeepSeekV4Flash)
+            client.moderate(prompt, DeepSeekModels.DeepSeekV4_1Flash)
         }
         assertTrue(ex.message!!.contains("Moderation is not supported"))
     }
@@ -529,7 +529,7 @@ class DeepSeekLLMClientTest {
             temperature = 0.2
         }
 
-        val response = client.execute(prompt, DeepSeekModels.DeepSeekV4Flash, tools = emptyList())
+        val response = client.execute(prompt, DeepSeekModels.DeepSeekV4_1Flash, tools = emptyList())
         assertEquals(1, response.parts.size, "Response should have once response")
         assertIs<MessagePart.Text>(response.parts[0], "Response should be assistant message")
         assertEquals(35, response.metaInfo.inputTokensCount)

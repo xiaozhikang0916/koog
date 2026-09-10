@@ -45,7 +45,7 @@ object Models {
 
     @JvmStatic
     fun deepSeekModels(): Stream<LLModel> = Stream.of(
-        DeepSeekModels.DeepSeekV4Flash,
+        DeepSeekModels.DeepSeekV4_1Flash,
     )
 
     @JvmStatic
