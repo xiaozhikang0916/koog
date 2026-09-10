@@ -338,20 +338,22 @@ class ModelIdentifierParsingTest {
 
     // DeepSeek model identifier tests
     @Test
-    fun testDeepSeekModels() = runTest {
+    fun testDeepSeekV41FlashModel() = runTest {
         // Test DeepSeek V4.1 Flash
         val deepSeekV41Flash = getModelFromIdentifier("deepseek.deepseek-v4.1-flash")
         assertNotNull(deepSeekV41Flash)
         assertEquals(LLMProvider.DeepSeek, deepSeekV41Flash.provider)
         assertEquals(DeepSeekModels.DeepSeekV4_1Flash, deepSeekV41Flash)
+    }
 
-        // Test DeepSeek V4 Flash
+    @Test
+    fun testDeepSeekLegacyV4ModelsAreStillResolvable() = runTest {
+        // Legacy V4 models are deprecated but must remain resolvable by their identifiers
         val deepSeekV4Flash = getModelFromIdentifier("deepseek.deepseek-v4-flash")
         assertNotNull(deepSeekV4Flash)
         assertEquals(LLMProvider.DeepSeek, deepSeekV4Flash.provider)
         assertEquals(DeepSeekModels.DeepSeekV4Flash, deepSeekV4Flash)
 
-        // Test DeepSeek V4 Pro
         val deepSeekV4Pro = getModelFromIdentifier("deepseek.deepseek-v4-pro")
         assertNotNull(deepSeekV4Pro)
         assertEquals(LLMProvider.DeepSeek, deepSeekV4Pro.provider)
